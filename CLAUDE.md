@@ -1,5 +1,14 @@
 ## Change Log (Automated)
 
+- 2025-11-02: **PROJECT PUBLISHED TO GITHUB** - Initial public release.
+  - Repository: https://github.com/minervacap2022/klikkmp
+  - Files added:
+    - `README.zh-CN.md`: Comprehensive README in simplified Chinese
+    - `.gitignore`: Kotlin Multiplatform project gitignore configuration
+  - Git initialized with 67 files and 250,233 lines of code
+  - Repository description: "Klik Calendar - Kotlin Multiplatform app with calendar, feedback system, and hardware integration"
+  - All placeholder code clearly documented with `⚠️ PLACEHOLDER_REMOVE` markers
+
 - 2025-11-02: Removed Recording floating action button from UI.
   - File: `shared/src/main/kotlin/com/klikcalendar/app/App.kt`
   - Change: Removed `floatingActionButton` parameter from Scaffold, which contained RecordingButton and RecordingStatusIndicator
