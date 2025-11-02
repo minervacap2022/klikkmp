@@ -1,12 +1,21 @@
 ## Change Log (Automated)
 
-- 2025-11-02: **PROJECT PUBLISHED TO GITHUB** - Initial public release.
+- 2025-11-02: **PROJECT PUBLISHED TO GITHUB** - Initial public release as Android Studio project.
   - Repository: https://github.com/minervacap2022/klikkmp
-  - Files added:
-    - `README.zh-CN.md`: Comprehensive README in simplified Chinese
+  - Files created/updated:
+    - `README.zh-CN.md`: Comprehensive README in simplified Chinese for Android development
+    - `README.md`: English README clearly stating Android Studio project (replaced outdated iOS README)
     - `.gitignore`: Kotlin Multiplatform project gitignore configuration
   - Git initialized with 67 files and 250,233 lines of code
-  - Repository description: "Klik Calendar - Kotlin Multiplatform app with calendar, feedback system, and hardware integration"
+  - Repository metadata:
+    - Description: "Klik Calendar - Android app built with Kotlin Multiplatform & Jetpack Compose. Features: calendar, feedback system, hardware integration (battery/bluetooth)"
+    - Topics: android, android-studio, calendar-app, jetpack-compose, kotlin, kotlin-multiplatform
+    - Language: Kotlin
+  - Documentation emphasizes:
+    - Android Studio as primary IDE
+    - Android platform focus (not iOS)
+    - Detailed Android build instructions
+    - Android-specific hardware integration (BatteryManager, BluetoothAdapter)
   - All placeholder code clearly documented with `⚠️ PLACEHOLDER_REMOVE` markers
 
 - 2025-11-02: Removed Recording floating action button from UI.
