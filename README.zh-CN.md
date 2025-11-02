@@ -1,10 +1,10 @@
-# Klik 日历应用 - Kotlin Multiplatform
+# Klik 日历应用 - Android 应用
 
-一个基于 Kotlin Multiplatform 构建的现代化日历与工作流管理应用。
+一个基于 Kotlin Multiplatform 和 Jetpack Compose 构建的现代化 Android 日历与工作流管理应用。
 
 ## 📱 项目概述
 
-Klik 是一个集成了日历、会议转录、任务管理和知识图谱的综合性工作管理应用。采用 Kotlin Multiplatform (KMP) 技术栈，支持 Android 和 iOS 平台。
+Klik 是一个集成了日历、会议转录、任务管理和知识图谱的综合性工作管理 Android 应用。采用 Kotlin Multiplatform (KMP) 技术栈构建，使用 Jetpack Compose 实现 UI，**当前版本主要支持 Android 平台**。
 
 ## ✨ 核心功能
 
@@ -42,11 +42,13 @@ Klik 是一个集成了日历、会议转录、任务管理和知识图谱的综
 ## 🏗️ 技术架构
 
 ### 技术栈
+- **平台**：Android (使用 Android Studio 开发)
 - **UI 框架**：Jetpack Compose Multiplatform
 - **语言**：Kotlin
 - **架构模式**：MVVM + Repository Pattern
 - **并发**：Kotlin Coroutines + Flow
 - **日期时间**：kotlinx-datetime
+- **构建工具**：Gradle (Kotlin DSL)
 
 ### 项目结构
 ```
@@ -70,11 +72,33 @@ Klik_UI/
 ## 🚀 快速开始
 
 ### 环境要求
-- JDK 17 或更高版本
-- Android Studio Hedgehog (2023.1.1) 或更新版本
-- Gradle 8.0+
+- **JDK 17** 或更高版本
+- **Android Studio Hedgehog (2023.1.1)** 或更新版本
+- **Gradle 8.0+** (项目自带 Gradle Wrapper)
+- **Android SDK** (通过 Android Studio 安装)
+- 推荐：Android 模拟器或真实 Android 设备用于测试
 
 ### 构建项目
+
+#### 方法一：使用 Android Studio（推荐）
+
+1. **克隆仓库**
+```bash
+git clone https://github.com/minervacap2022/klikkmp.git
+```
+
+2. **打开项目**
+   - 启动 Android Studio
+   - 选择 "Open" 打开项目
+   - 选择克隆的 `klikkmp` 文件夹
+   - 等待 Gradle 同步完成
+
+3. **运行应用**
+   - 点击工具栏的 "Run" 按钮（绿色三角形）
+   - 或按快捷键 `Shift + F10` (Windows/Linux) 或 `Control + R` (Mac)
+   - 选择 Android 模拟器或已连接的设备
+
+#### 方法二：使用命令行
 
 1. **克隆仓库**
 ```bash
@@ -87,12 +111,18 @@ cd klikkmp
 ./gradlew build
 ```
 
-3. **运行 Android 应用**
+3. **安装到设备**
 ```bash
+# Debug 版本
 ./gradlew :app:installDebug
+
+# Release 版本
+./gradlew :app:installRelease
 ```
 
-或在 Android Studio 中直接运行。
+4. **在设备上运行**
+   - 应用会自动安装到连接的 Android 设备或模拟器
+   - 在应用抽屉中找到 "Klik" 图标并点击启动
 
 ## ⚠️ 占位数据说明
 
@@ -141,35 +171,43 @@ grep -r "PLACEHOLDER_REMOVE" .
 
 应用已为硬件集成做好准备：
 
-### 电池状态集成
-- 使用平台 API：
-  - Android: `BatteryManager`
-  - iOS: `UIDevice.current.batteryLevel`
+### 电池状态集成（Android）
+- 使用 Android 平台 API：`BatteryManager`
+- 通过 `BroadcastReceiver` 监听 `ACTION_BATTERY_CHANGED`
 - 建议轮询频率：30-60 秒
 - 状态等级映射：
   - 正常：电量 > 20%
   - 警告：电量 10-20%
   - 严重：电量 < 10%
+- 示例代码位置：需要在 `AndroidAudioRecorder.kt` 中添加
 
 ### 蓝牙集成
-- 使用平台 API：
-  - Android: `BluetoothAdapter`
-  - iOS: `CoreBluetooth`
+- 使用 Android 平台 API：`BluetoothAdapter`
 - 实时连接状态监控
 - 支持 BLE (Bluetooth Low Energy)
+- 需要 `BLUETOOTH` 和 `BLUETOOTH_ADMIN` 权限
 
 详细集成说明请参考 `StatusOverlay.kt` 文件顶部的文档注释。
+
+## 🔧 Android 权限
+
+应用需要以下 Android 权限（在 `AndroidManifest.xml` 中配置）：
+- `BLUETOOTH` - 蓝牙连接
+- `BLUETOOTH_ADMIN` - 蓝牙管理
+- `RECORD_AUDIO` - 录音功能
+- `INTERNET` - 网络请求
 
 ## 📝 待办事项
 
 - [ ] 集成真实后端 API
 - [ ] 实现用户认证
 - [ ] 添加深色模式支持
-- [ ] 实现 iOS 平台支持
 - [ ] 添加单元测试和 UI 测试
 - [ ] 实现离线数据缓存
-- [ ] 添加推送通知
+- [ ] 添加 Android 推送通知
 - [ ] 实现硬件集成（电池、蓝牙）
+- [ ] 优化 Android 性能和内存使用
+- [ ] 未来计划：iOS 平台支持（KMP 已就绪）
 
 ## 🤝 贡献
 
