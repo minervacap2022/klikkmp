@@ -1,0 +1,18 @@
+> now I need you to connect to the real backend,
+
+  you need to add a button on the website of
+  "recording", which let this app to record audio,
+  after the audio record, it processes this audio via
+  /root/KK_asrdiar/cog-whisper-diarization/run_compl
+  ete_pipeline.py, to process this audio, and return
+  the processed results to the app frontend,
+
+
+  the sample raw results is the following:
+  /root/KK_pipelinetests/test_results/complete_pipel
+  ine_1761911077.json,
+  so you need to map the results in this output into
+  each sections of the web, EVERYTHING SHOULD
+  CAREFULLY follow the backend datasets, so if you
+  need to change the frontend, go change it, as long
+  as it can displays the results properly.

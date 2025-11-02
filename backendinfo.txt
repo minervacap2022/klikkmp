@@ -1,0 +1,450 @@
+
+Cloud Project
+Instances
+Clusters
+beta
+Storage
+Block volumes
+Shared filesystems
+beta
+Serverless Containers
+Inference
+Keys
+Team
+Billing & settings
+Projects
+Cloud Project
+Instances
+Instances
+
+
+Name
+sweet-hand-falls-fin-02
+ID:
+d62161ec-dc22-4c9c-819a-8bf33a9fb0c6
+Status
+Running
+Type
+1x
+L40S
+1L40S.20V
+OS
+ubuntu 150 GB
+OS-mxA2wQhY
+IP
+86.38.238.159
+Location
+FIN-02
+Contract
+Pay As You Go
+Dynamic
+? Copyright 2025 
+All Rights Reserved. 
+Manage your cookie preferences here.
+
+
+
+REST API Credentials:
+Client secret: X92wbYwspy6PIJ66ytNyllJLCbo1faDay9a2OW9Iex
+Clinet ID: dGfYggLMKWhz0gsQz61O2
+
+Open API Client
+Powered by Scalar
+
+v1OAS 3.0.3
+DataCrunch.io Public API
+Download OpenAPI Document
+DataCrunch.io
+Introduction
+DataCrunch.io API allows you to deploy, control instances & more via external code.
+
+The API is a RESTful API over HTTPS, all requests & responses use JSON as the data exchange format.
+
+An official Python SDK is available here.
+
+
+Quick Start Guide
+We use OAuth 2.0 Client Credentials authentication scheme.
+
+Users are able to generate credentials via the dashboard UI - for external applications to use datacrunch's api.
+
+The credentials are used to generate Access & Refresh tokens.
+
+All requests to datacrunch's api must be authenticated using the Access token.
+
+Access tokens have a short lifespan, and can be regenerated using the Refresh token.
+
+
+1. Get Credentials from the DataCrunch.io Dashboard
+Go to the Keys page and click on Create REST API Credentials
+
+These credentials will be used like a username & password for your application.
+
+Store the client secret safely - like a password.
+
+
+2. Generate Access Token
+An Access Token is needed to be sent with any API call for authentication.
+
+The Access Token has a limited lifetime and is expired after a while as defined in expires_in.
+
+It is used as a bearer token
+
+
+To get an access token, call the token endpoint with the credentials you got on step 1:
+{
+  "method": "post",
+  "url": "https://api.datacrunch.io/v1/oauth2/token",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "grant_type": "client_credentials",
+    "client_id": "<YOUR_CLIENT_ID>",
+    "client_secret": "<YOUR_CLIENT_SECRET>"
+  }
+}
+A valid response would look similar to this:
+
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoZXkiOiJ5b3UgYWN1YWxseSBjaGVja2VkIHRoaXM_In0.0RjcdKQ1NJP9gbRyXITE6LFFLwKGzeeshuubnkkfkb8",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3ciOiJhbmQgdGhpcyB0b28_In0.AC5gk-o-MOptUgrouEErlhr8WT3Hg_RR6px6A0I7ZEk",
+  "scope": "fullAccess"
+}
+access_token is the token value, to be used in the next step.
+
+expires_in is the duration in seconds until the token is expired.
+
+refresh_token can be used to create a new access token if expired.
+
+When an Access Token expires, create a new one using the refresh token:
+
+{
+  "method": "post",
+  "url": "https://api.datacrunch.io/v1/oauth2/token",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "grant_type": "refresh_token",
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3ciOiJhbmQgdGhpcyB0b28_In0.AC5gk-o-MOptUgrouEErlhr8WT3Hg_RR6px6A0I7ZEk"
+  }
+}
+The response will include a new token.
+
+
+3. Make REST API Calls
+That's it, you are ready to use the API, don't forget to add the Access Token to your calls:
+
+Let's call the /balance endpoint.
+
+Add the Access Token value to the Authorization header, preceded by the "Bearer" string and a space:
+
+{
+  "method": "get",
+  "url": "https://api.datacrunch.io/v1/balance",
+  "headers": {
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoZXkiOiJ5b3UgYWN1YWxseSBjaGVja2VkIHRoaXM_In0.0RjcdKQ1NJP9gbRyXITE6LFFLwKGzeeshuubnkkfkb8"
+  }
+}
+
+Errors
+Error response body has following schema:
+
+Key	Info
+code	Error type
+message	Textual description of the error details
+Error types:
+
+Code	Description	Matching HTTP error code
+invalid_request	Invalid request, usually an input error - missing or invalid property etc.	400
+unauthorized_request	Access token is missing or invalid	401
+insufficient_funds	Not enough funds to perform the action	402
+forbidden_action	Can't perform the current action	403
+not_found	Resource not found, or invalid path	404
+server_error	Error on datacrunch's side	500
+service_unavailable	Not enough resources at the moment, try again later or use a different resource	503
+Server
+Base URL
+Selected:
+https://api.datacrunch.io
+
+Authentication
+Optional
+
+bearer
+Bearer Token
+:
+Token
+Show Password
+Client Libraries
+
+Curl
+Curl Shell
+Authentication?#Copy link to "Authentication"
+AuthenticationEndpoints
+POST
+/v1/oauth2/token
+Get access token for public API?#Copy link to "Get access token for public API"
+Body
+application/json
+oneOf
+Show Child Attributes
+Show Child Attributes
+Responses
+Expand
+200
+Valid credentials
+application/json
+Expand
+400
+Invalid request
+application/json
+Expand
+401
+Unauthorized
+application/json
+POST
+/v1/oauth2/token
+Selected HTTP client:Shell Curl
+
+Curl
+Copy content
+curl https://api.datacrunch.io/v1/oauth2/token \
+  --request POST \
+  --header 'Authorization: Bearer YOUR_SECRET_TOKEN' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "grant_type": "client_credentials",
+  "client_id": "6a51jsgnISg6JOyE7wYZh",
+  "client_secret": "TvSBFujsqloJb4Jbcezths1OPK9my3zodM3zot9Fn5"
+}'
+
+Test Request
+(POST /v1/oauth2/token)
+200
+400
+401
+Copy content
+{
+  "access_token": "eyJhbGciOiJIUzI1NiI...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "OU4O2BwA690cKg2OfGS8pgIfGSTD2vJ...",
+  "scope": "fullAccess"
+}
+Valid credentials
+
+Balance?#Copy link to "Balance"
+BalanceEndpoints
+GET
+/v1/balance
+Show More
+OS Images?#Copy link to "OS Images"
+OS ImagesEndpoints
+GET
+/v1/images
+Show More
+Volumes?#Copy link to "Volumes"
+VolumesEndpoints
+GET
+/v1/volumes
+POST
+/v1/volumes
+PUT
+/v1/volumes
+GET
+/v1/volumes/trash
+GET
+/v1/volumes/{volume_id}
+DELETE
+/v1/volumes/{volume_id}
+Show More
+Volume Types?#Copy link to "Volume Types"
+Volume TypesEndpoints
+GET
+/v1/volume-types
+Show More
+Instances?#Copy link to "Instances"
+InstancesEndpoints
+GET
+/v1/instances
+POST
+/v1/instances
+PUT
+/v1/instances
+GET
+/v1/instances/types
+GET
+/v1/instances/{instance_id}
+GET
+/v1/instances/availability/{instanceType}
+POST
+/v1/instances/action
+Show More
+Instance Types?#Copy link to "Instance Types"
+Instance TypesEndpoints
+GET
+/v1/instance-types
+GET
+/v1/instance-types/price-history
+Show More
+Instance Availability?#Copy link to "Instance Availability"
+Instance AvailabilityEndpoints
+GET
+/v1/instance-availability
+GET
+/v1/instance-availability/{instance_type}
+Show More
+SSH Keys?#Copy link to "SSH Keys"
+SSH KeysEndpoints
+GET
+/v1/sshkeys
+POST
+/v1/sshkeys
+DELETE
+/v1/sshkeys
+GET
+/v1/ssh-keys
+POST
+/v1/ssh-keys
+DELETE
+/v1/ssh-keys
+GET
+/v1/sshkeys/{sshKeyId}
+DELETE
+/v1/sshkeys/{sshKeyId}
+GET
+/v1/ssh-keys/{sshKeyId}
+DELETE
+/v1/ssh-keys/{sshKeyId}
+Show More
+Startup Scripts?#Copy link to "Startup Scripts"
+Startup ScriptsEndpoints
+GET
+/v1/scripts
+POST
+/v1/scripts
+DELETE
+/v1/scripts
+GET
+/v1/scripts/{scriptId}
+DELETE
+/v1/scripts/{scriptId}
+Show More
+Locations?#Copy link to "Locations"
+LocationsEndpoints
+GET
+/v1/locations
+Show More
+Long Term?#Copy link to "Long Term"
+Long TermEndpoints
+GET
+/v1/long-term/periods
+GET
+/v1/long-term/periods/instances
+GET
+/v1/long-term/periods/clusters
+Show More
+Cluster Types?#Copy link to "Cluster Types"
+Cluster TypesEndpoints
+GET
+/v1/cluster-types
+Show More
+Container Types?#Copy link to "Container Types"
+Container TypesEndpoints
+GET
+/v1/container-types
+Show More
+Serverless Jobs?#Copy link to "Serverless Jobs"
+Serverless JobsEndpoints
+GET
+/v1/job-deployments
+POST
+/v1/job-deployments
+GET
+/v1/job-deployments/{jobName}
+DELETE
+/v1/job-deployments/{jobName}
+GET
+/v1/job-deployments/{jobName}/scaling
+POST
+/v1/job-deployments/{jobName}/purge-queue
+POST
+/v1/job-deployments/{jobName}/pause
+POST
+/v1/job-deployments/{jobName}/resume
+GET
+/v1/job-deployments/{jobName}/status
+Show More
+Serverless Containers?#Copy link to "Serverless Containers"
+Serverless ContainersEndpoints
+GET
+/v1/container-deployments
+POST
+/v1/container-deployments
+GET
+/v1/container-deployments/{deployment_name}
+PATCH
+/v1/container-deployments/{deployment_name}
+DELETE
+/v1/container-deployments/{deployment_name}
+GET
+/v1/container-deployments/{deployment_name}/status
+POST
+/v1/container-deployments/{deployment_name}/restart
+GET
+/v1/container-deployments/{deployment_name}/scaling
+PATCH
+/v1/container-deployments/{deployment_name}/scaling
+GET
+/v1/container-deployments/{deployment_name}/replicas
+POST
+/v1/container-deployments/{deployment_name}/purge-queue
+POST
+/v1/container-deployments/{deployment_name}/pause
+POST
+/v1/container-deployments/{deployment_name}/resume
+GET
+/v1/container-deployments/{deployment_name}/environment-variables
+POST
+/v1/container-deployments/{deployment_name}/environment-variables
+PATCH
+/v1/container-deployments/{deployment_name}/environment-variables
+DELETE
+/v1/container-deployments/{deployment_name}/environment-variables
+GET
+/v1/serverless-compute-resources
+GET
+/v1/secrets
+POST
+/v1/secrets
+DELETE
+/v1/secrets/{secret_name}
+GET
+/v1/file-secrets
+POST
+/v1/file-secrets
+DELETE
+/v1/file-secrets/{secret_name}
+GET
+/v1/container-registry-credentials
+POST
+/v1/container-registry-credentials
+DELETE
+/v1/container-registry-credentials/{credentials_name}
+Show More
+Models
+GetAccessTokenDto?#Copy link to "GetAccessTokenDto"
+RefreshAccessTokenPublicApiDto?#Copy link to "RefreshAccessTokenPublicApiDto"
+GetAccessTokenResponseDto?#Copy link to "GetAccessTokenResponseDto"
+PublicApiErrorResponseDto?#Copy link to "PublicApiErrorResponseDto"
+BalanceResponseDto?#Copy link to "BalanceResponseDto"
+GetOsResponseDto?#Copy link to "GetOsResponseDto"
+GetVolumePublicResponseDto?#Copy link to "GetVolumePublicResponseDto"
+GetVolumeInTrashPublicResponseDto?#Copy link to "GetVolumeInTrashPublicResponseDto"
+CreateVolumePublicDto?#Copy link to "CreateVolumePublicDto"
+PerformVolumeActionPublicDto?#Copy link to "PerformVolumeActionPublicDto"
+Show More
