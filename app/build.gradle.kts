@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.klikcalendar.app"
+    namespace = "com.klikcalendar.shared"
     compileSdk = 34
 
     defaultConfig {
@@ -30,12 +30,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -51,13 +51,20 @@ dependencies {
     implementation(compose.ui)
     implementation(compose.foundation)
     implementation(compose.material3)
+    implementation(compose.materialIconsExtended)
     implementation(compose.animation)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")      // ← 启用 @Preview
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
 
     // Android
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+
 
     // Testing
     testImplementation("junit:junit:4.13.2")

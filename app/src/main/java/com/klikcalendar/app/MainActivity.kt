@@ -7,8 +7,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.klikcalendar.app.audio.AndroidAudioRecorder
-import com.klikcalendar.app.KlikApp
+import com.klikcalendar.shared.audio.AndroidAudioRecorder
+import com.klikcalendar.app.ui.KlikApp
 
 class MainActivity : ComponentActivity() {
 
