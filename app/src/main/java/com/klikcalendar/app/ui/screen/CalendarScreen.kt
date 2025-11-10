@@ -45,12 +45,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.klikcalendar.shared.model.CalendarEvent
 import com.klikcalendar.shared.model.EventStatus
 import com.klikcalendar.shared.model.TimelineDay
 import com.klikcalendar.shared.state.FilterState
 import com.klikcalendar.shared.strings.AppStrings
 import com.klikcalendar.app.ui.components.MonthlyCalendar
+import com.klikcalendar.shared.model.viewmodel.MeetingViewModel
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
@@ -254,17 +256,23 @@ private fun DayChip(day: TimelineDay, highlight: Boolean) {
 }
 
 @Composable
+/**
+ * 会议概要信息-card 样式 点击进入会议详情页面 meetingDetailScreen
+ */
 private fun CalendarEventCard(
     event: CalendarEvent,
     strings: AppStrings,
     onOpenMeeting: (CalendarEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val viewModel: MeetingViewModel = viewModel()
     Card(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .clickable { onOpenMeeting(event) },
+            .clickable {
+                viewModel.refresh() //调用接口，返回会议数据
+                onOpenMeeting(event) },
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)),
     ) {

@@ -44,7 +44,7 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 
 object SampleData {
-    private val nowDate = LocalDate(2025, 10, 28)
+    private val nowDate = LocalDate(2025, 11, 6)
     private val nextDay = nowDate.plus(DatePeriod(days = 1))
     private val previousDay = nowDate.minus(DatePeriod(days = 1))
 
