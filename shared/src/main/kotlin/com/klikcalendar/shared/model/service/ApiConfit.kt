@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
@@ -23,6 +24,7 @@ object ApiConfig {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
+            .addConverterFactory(ScalarsConverterFactory.create()) // ← 必须加，且放前面
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)

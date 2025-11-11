@@ -2,6 +2,7 @@ package com.klikcalendar.shared.model
 
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.Serializable
 
 enum class StatusLevel {
     Normal,
@@ -46,6 +47,7 @@ enum class EventStatus {
     Archived,
 }
 
+@Serializable
 data class CalendarEvent(
     val id: String,
     val title: String,

@@ -1,5 +1,6 @@
 package com.klikcalendar.app.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,6 +25,7 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -34,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,6 +55,7 @@ import com.klikcalendar.shared.model.TimelineDay
 import com.klikcalendar.shared.state.FilterState
 import com.klikcalendar.shared.strings.AppStrings
 import com.klikcalendar.app.ui.components.MonthlyCalendar
+import com.klikcalendar.shared.model.viewmodel.MeetingUiState
 import com.klikcalendar.shared.model.viewmodel.MeetingViewModel
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
@@ -266,13 +270,26 @@ private fun CalendarEventCard(
     modifier: Modifier = Modifier,
 ) {
     val viewModel: MeetingViewModel = viewModel()
+    LaunchedEffect(viewModel.uiState.value) {
+        when (val state = viewModel.uiState.value) {
+            is MeetingUiState.Success -> {
+                onOpenMeeting(state.meeting)
+            }
+            is MeetingUiState.Error -> {
+
+            }
+            else -> {
+            }
+        }
+    }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .clickable {
-                viewModel.refresh() //调用接口，返回会议数据
-                onOpenMeeting(event) },
+                viewModel.refresh()
+                },
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)),
     ) {

@@ -3,6 +3,7 @@ package com.klikcalendar.shared.model.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.klikcalendar.shared.model.CalendarEvent
 import com.klikcalendar.shared.model.data.MeetingInfo
 import com.klikcalendar.shared.model.service.MeetingApiServiceImp
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,11 +16,12 @@ class MeetingViewModel : ViewModel() {
 
     private val repository = MeetingApiServiceImp()
 
-    fun refresh() {
+    fun refresh(){
         loadMeetingInfo() // 重新调用
     }
 
     private fun loadMeetingInfo() {
+
         viewModelScope.launch {
             _uiState.value = MeetingUiState.Loading
             repository.fetchMeetingInfo()
@@ -35,6 +37,6 @@ class MeetingViewModel : ViewModel() {
 
 sealed interface MeetingUiState {
     object Loading : MeetingUiState
-    data class Success(val meeting: MeetingInfo) : MeetingUiState
+    data class Success(val meeting: CalendarEvent) : MeetingUiState
     data class Error(val message: String) : MeetingUiState
 }
