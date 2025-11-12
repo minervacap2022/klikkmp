@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -37,6 +39,7 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -87,6 +90,13 @@ fun CalendarScreen(
         derivedStateOf {
             val monthsOffset = pagerState.currentPage - initialPage
             today.plus(monthsOffset, DateTimeUnit.MONTH)
+        }
+    }
+    val viewModel: MeetingViewModel = viewModel()
+    val uiState by viewModel.uiState.collectAsState()
+    LaunchedEffect(viewModel) {
+        viewModel.navigateToMeeting.collect { meeting ->
+            onOpenMeeting(meeting)
         }
     }
 
@@ -196,6 +206,7 @@ fun CalendarScreen(
                         key = { it.id },
                     ) { event ->
                         CalendarEventCard(
+                            myViewModel = viewModel,
                             event = event,
                             strings = strings,
                             modifier = Modifier.padding(horizontal = 16.dp),
@@ -224,6 +235,18 @@ fun CalendarScreen(
             }
         }
     }
+    if (uiState == MeetingUiState.Loading) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.6f))
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+
 }
 
 @Composable
@@ -264,31 +287,20 @@ private fun DayChip(day: TimelineDay, highlight: Boolean) {
  * 会议概要信息-card 样式 点击进入会议详情页面 meetingDetailScreen
  */
 private fun CalendarEventCard(
+    myViewModel: MeetingViewModel,
     event: CalendarEvent,
     strings: AppStrings,
     onOpenMeeting: (CalendarEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel: MeetingViewModel = viewModel()
-    LaunchedEffect(viewModel.uiState.value) {
-        when (val state = viewModel.uiState.value) {
-            is MeetingUiState.Success -> {
-                onOpenMeeting(state.meeting)
-            }
-            is MeetingUiState.Error -> {
 
-            }
-            else -> {
-            }
-        }
-    }
 
     Card(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .clickable {
-                viewModel.refresh()
+                myViewModel.refresh()
                 },
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)),
@@ -336,6 +348,7 @@ private fun CalendarEventCard(
                 }
             }
         }
+
     }
 }
 

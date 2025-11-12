@@ -24,7 +24,7 @@ object ApiConfig {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(ScalarsConverterFactory.create()) // ← 必须加，且放前面
+            .addConverterFactory(ScalarsConverterFactory.create()) // 必须加，且放前面 支持LocalDateTime等
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)

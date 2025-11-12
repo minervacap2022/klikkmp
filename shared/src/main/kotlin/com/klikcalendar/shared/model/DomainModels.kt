@@ -47,7 +47,6 @@ enum class EventStatus {
     Archived,
 }
 
-@Serializable
 data class CalendarEvent(
     val id: String,
     val title: String,
